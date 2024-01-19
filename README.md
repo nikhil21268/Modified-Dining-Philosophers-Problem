@@ -45,57 +45,50 @@ This repository contains implementations of the Dining Philosophers problem usin
 
 All implementations follow a similar structure where philosophers (threads) are started in parallel, and rules are established for resource allocation to avoid deadlocks.
 
-## Implementation 1
+### 1) Dining Philosophers Simulation with Strict Resource Ordering
 
-### Primitives Used
+#### Resources Used:
 
-- Two integers (`i` and `j`) for loop control and thread-related operations.
-- A `void*` pointer named `msg` to store exit statuses of threads.
-- `pthread_mutex_t` for representing forks/chopsticks.
-- `sleep()` function for simulating eating.
+In this simulation, philosophers are represented by threads, and forks/chopsticks are represented using global variables—an array of `pthread_mutex_t`. The key strategy involves starting all threads in parallel and enforcing a rule where philosophers always reach for the lower-numbered fork/chopstick first. Once successfully acquired, they attempt to grab the higher-numbered fork/chopstick. This strict ordering of resource allocation, coupled with the use of `pthread_mutex`, ensures deadlock prevention.
 
-### Algorithmic Approach
+#### Primitives Used:
 
-Philosophers follow a strict order in grabbing forks/chopsticks to prevent deadlocks. Mutexes ensure exclusive access to shared resources.
+- **Variables:** Two integers, `i` and `j`, are used for various purposes such as loop control, thread creation/joining, and mutex creation/destruction.
+- **Pointer:** A `void*` pointer named `msg` is utilized to store the exit status of threads after calling `pthread_join`. While not required in this case due to the use of `pthread_mutexes`, it can be used for error checking and handling.
+- **Sleep Function:** `sleep()` function simulates the eating process.
 
-## Implementation 2
+### 2) Dining Philosophers Simulation with Semaphores
 
-### Primitives Used
+#### Resources Used:
 
-- Integer `i` for loop control and thread-related operations.
-- `sem_wait` and `sem_post` for semaphore operations.
-- `sleep()` function for simulating eating.
+This simulation employs threads to represent philosophers, and forks/chopsticks are modeled using global variables—an array of `pthread_mutex_t`. The approach involves starting all threads in parallel, with a rule specifying that philosophers always go for the left fork first using semaphores. After obtaining the left fork, they can proceed to attempt to grab the right fork/chopstick. The use of semaphores ensures proper resource allocation, preventing deadlock scenarios.
 
-### Algorithmic Approach
+#### Primitives Used:
 
-This implementation uses semaphores to allocate resources, ensuring philosophers grab the left fork first, preventing deadlocks.
+- **Variable:** The integer `i` is employed for loop control in thread creation/joining and mutex creation/destruction.
+- **Sleep Function:** `sleep()` function simulates the eating process.
+- **Semaphores:** `sem_wait` and `sem_post` are utilized to wait for and signal the end of semaphore use, respectively.
 
-## Implementation 3
+### 3) Dining Philosophers Simulation with Semaphores and Sauce Bowls
 
-### Primitives Used
+#### Resources Used:
 
-- Integer `i` for loop control and thread-related operations.
-- `sem_wait` and `sem_post` for semaphore operations.
-- Three semaphores (`forks`, `room`, and `sauce`) to manage resource access.
-- `sleep()` function for simulating eating.
+Similar to the previous simulation, philosophers are represented by threads, and forks/chopsticks are modeled using global variables—an array of `pthread_mutex_t`. Philosophers follow a rule of going for the left fork first, facilitated by semaphores. Additionally, semaphores are used for two sauce bowls, ensuring only two philosophers can access them simultaneously, preventing potential deadlocks.
 
-### Algorithmic Approach
+#### Primitives Used:
 
-Similar to Implementation 2, but with an additional semaphore for sauce bowls. The `room` semaphore prevents deadlocks.
+- **Variables:** The integer `i` is used for loop control in thread creation/joining and mutex creation/destruction.
+- **Sleep Function:** `sleep()` function simulates the eating process.
+- **Semaphores:** `sem_wait` and `sem_post` are employed for waiting and signaling, respectively. Three semaphores are used for forks, room access, and sauce bowl access.
 
-## Implementation 4
+### 4) Dining Philosophers Simulation with Strict Resource Ordering and Sauce Bowls
 
-### Primitives Used
+#### Resources Used:
 
-- Three integers (`i`, `j`, and `k`) for loop control and thread-related operations.
-- `void*` pointer named `msg` to store exit statuses of threads.
-- `pthread_mutex_t` for forks/chopsticks and sauce bowls.
-- `sleep()` function for simulating eating.
+In this scenario, philosophers and forks/chopsticks are represented by threads and global variables—an array of `pthread_mutex_t` for forks and a separate array for two sauce bowls. The approach is to start all threads in parallel and enforce a rule of grabbing lower-numbered forks/chopsticks first. After acquiring them, philosophers attempt to grab higher-numbered forks and immediately move on to grab a sauce bowl if available. The strict resource ordering, coupled with `pthread_mutex`, ensures deadlock prevention.
 
-### Algorithmic Approach
+#### Primitives Used:
 
-Philosophers follow a strict order in grabbing forks/chopsticks and sauce bowls, preventing deadlocks. Mutexes ensure exclusive access to shared resources.
-
----
-
-Feel free to explore each implementation for a detailed look at the code and the specific algorithmic approaches employed.
+- **Variables:** Three integers, `i`, `j`, and `k`, are employed for loop control in thread creation/joining and mutex creation/destruction.
+- **Pointer:** A `void*` pointer named `msg` stores the exit status of threads after calling `pthread_join`. While not strictly required, it can be used for error checking and handling.
+- **Sleep Function:** `sleep()` function simulates the eating process.
