@@ -35,4 +35,67 @@ The dining philosophers problem involves five philosophers sitting around a roun
 2. **Task Description:** Provide a README file with a short explanation of the resources and primitives used [5 points].
 
 
+# Dining Philosophers Simulation
 
+## Overview
+
+This repository contains implementations of the Dining Philosophers problem using threads in C. The goal is to model philosophers as threads and forks (or chopsticks) as global resources using various synchronization mechanisms to avoid deadlocks.
+
+### General Approach
+
+All implementations follow a similar structure where philosophers (threads) are started in parallel, and rules are established for resource allocation to avoid deadlocks.
+
+## Implementation 1
+
+### Primitives Used
+
+- Two integers (`i` and `j`) for loop control and thread-related operations.
+- A `void*` pointer named `msg` to store exit statuses of threads.
+- `pthread_mutex_t` for representing forks/chopsticks.
+- `sleep()` function for simulating eating.
+
+### Algorithmic Approach
+
+Philosophers follow a strict order in grabbing forks/chopsticks to prevent deadlocks. Mutexes ensure exclusive access to shared resources.
+
+## Implementation 2
+
+### Primitives Used
+
+- Integer `i` for loop control and thread-related operations.
+- `sem_wait` and `sem_post` for semaphore operations.
+- `sleep()` function for simulating eating.
+
+### Algorithmic Approach
+
+This implementation uses semaphores to allocate resources, ensuring philosophers grab the left fork first, preventing deadlocks.
+
+## Implementation 3
+
+### Primitives Used
+
+- Integer `i` for loop control and thread-related operations.
+- `sem_wait` and `sem_post` for semaphore operations.
+- Three semaphores (`forks`, `room`, and `sauce`) to manage resource access.
+- `sleep()` function for simulating eating.
+
+### Algorithmic Approach
+
+Similar to Implementation 2, but with an additional semaphore for sauce bowls. The `room` semaphore prevents deadlocks.
+
+## Implementation 4
+
+### Primitives Used
+
+- Three integers (`i`, `j`, and `k`) for loop control and thread-related operations.
+- `void*` pointer named `msg` to store exit statuses of threads.
+- `pthread_mutex_t` for forks/chopsticks and sauce bowls.
+- `sleep()` function for simulating eating.
+
+### Algorithmic Approach
+
+Philosophers follow a strict order in grabbing forks/chopsticks and sauce bowls, preventing deadlocks. Mutexes ensure exclusive access to shared resources.
+
+---
+
+Feel free to explore each implementation for a detailed look at the code and the specific algorithmic approaches employed.
